@@ -1,15 +1,16 @@
 pipeline {
-    agent any 
-    stages {
-        stage('Build') { 
+     agent any
+     stages {
+        stage("Build") {
             steps {
-                sh "npm install" 
+                sh "sudo npm install"
+                sh "sudo npm run build"
             }
         }
-
-	stage('Deploy') {
+        stage("Deploy") {
             steps {
-               sh "npm start"
+                sh "sudo rm -rf /var/www/jenkins-react-app"
+                sh "sudo cp -r ${WORKSPACE}/build/ /var/www/jenkins-react-app/"
             }
         }
     }
